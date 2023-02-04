@@ -1,0 +1,166 @@
+================================1=================
+Have the function TreeConstructor( strArr ) take the array of strings stored in strArr , 
+which will contain pairs of integers in the following format: (i1,i2) , 
+where i1 represents a child node in a tree and the second integer i2 
+signifies that it is the parent of i1 . 
+For example: if strArr is [“(1,2)”, “(2,4)”, “(7,2)”],
+ then this forms the following tree:
+=======Ans======
+
+function TreeConstructor(strArr) { 
+  var arr = [ ], counts= {};
+  for (i=0;i < strArr.length;i++){
+    arr.push(strArr[i].match(/[0-9]/g)[0]);
+    arr.push(strArr[i].match(/[0-9]/g)[1]);
+  }
+  arr.forEach(function(x){counts[x] = (counts[x] || 0 ) + 1});
+  for(j in counts){
+    if (counts[j] >=4){
+      return false;
+    }
+  }
+  return true;
+}
+
+=====================================2===========================
+
+BitmapHoles(strArr) take the array of strings stored in a string, 
+which will be a 2D matrix. of 0 and 1's, and determine how many holes, 
+or contiguous regions of 0's, exist in the matrix.
+========Ans====
+function BitmapHoles(strArr) { 
+  let bitmap = strArr.map(a => a.split(''));
+ // console.log(bitmap)
+  let count = 2;
+  
+  for(let i = 0; i < bitmap.length; i++) { // rows
+    for(let j = 0; j < bitmap[i].length; j++) { // cols 
+      if(bitmap[i][j] === '0') {
+        coverHole(bitmap, i, j, count++);                    
+      }      
+    }
+  }
+  return count - 2;         
+}
+
+function coverHole(bitmap, i, j, number){
+  bitmap[i][j] = number;
+  if (+bitmap[i][j-1] === 0) {
+      bitmap[i][j-1] = number;
+      coverHole(bitmap, i, j-1, number); 
+  } 
+  if (+bitmap[i][j+1] === 0) {
+      bitmap[i][j+1]= number;
+      coverHole(bitmap, i, j+1, number); 
+  }
+  if(bitmap[i-1] !== undefined && +bitmap[i-1][j] === 0) {
+      bitmap[i-1][j]= number;
+      coverHole(bitmap, i-1, j, number); 
+  }
+  if(bitmap[i+1] !== undefined && +bitmap[i+1][j] === 0) {
+      bitmap[i+1][j]= number;
+      coverHole(bitmap, i+1, j, number); 
+  }
+  return;
+}
+=======================================3=====================
+We provided some simple React template code. Your goal is to modify the 
+component so that you can properly toggle the button to switch between an 
+ON state and an OFF state. When the button is on and it is clicked, it turns
+ off and the text within it changes from ON to OFF and vice versa. Make use of 
+component state for this challenge.
+=======Ans===
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+class Toggle extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      toggle: false
+    }
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick() {
+    this.setState({ toggle: !this.state.toggle })
+  }
+
+  render() {
+    return (
+      <button onClick={this.handleClick}>{this.state.toggle === true ? 'ON' : 'OFF'}</button>
+    );
+  }
+}
+
+ReactDOM.render(
+  <Toggle />,
+  document.getElementById('root')
+);
+======================4====================
+This is the challenge: In the PHP file, write a program to perform a GET 
+request on the route https://coderbyte.com/api/challenges/json/age-counting 
+which contains a data key and the value is a string which contains items in 
+the format: key=STRING, age=INTEGER. Your goal is to count how many items exist 
+that have an age equal to or greater than 50, and print this final value.
+
+Example Input {"data":"key=IAfpK, age=58, key=WNVdi, age=64, key=jp9zt, age=47"}
+
+==Ans=====
+<?php
+
+  // Your goal is to count how many items exist that have an age equal to or greater than 50, and print this final value.
+
+  $ch = curl_init('https://coderbyte.com/api/challenges/json/age-counting');
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  curl_setopt($ch, CURLOPT_HEADER, 0);
+  $data = curl_exec($ch);
+  curl_close($ch);
+
+  $json_data = json_decode($data, true);
+  $items = explode(', ', $json_data['data']);
+  $count = array_reduce($items, function ($count, $item) {
+    if (strpos($item, 'age=') !== false) {
+      $age = explode('=', $item)[1];
+      if ($age >= 50) return $count + 1;
+    }
+    return $count;
+  }, 0);
+
+  print_r($count); // 128
+
+?>
+=======================5=============
+Have the function MatchingCharacters(str) take the str parameter being passed and determine the largest number of unique characters that exists between a pair of matching letters anywhere in the string. For example: if str is "ahyjakh" then there are only two pairs of matching letters, the two a's and the two h's. Between the pair of a's there are 3 unique characters: h, y, and j. Between the h's there are 4 unique characters: y, j, a, and k. So for this example your program should return 4. 
+Another example: if str is "ghececgkaem" then your program should return 5 because the most unique characters exists within the farthest pair of e characters. The input string may not contain any character pairs, and in that case your program should just return 0. The input will only consist of lowercase alphabetic characters. */
+
+=======Ans=======
+ String str = "ahyjakh";
+    int count = Integer.MIN_VALUE;    
+    for(int i = 0; i < str.length(); i++)
+    {
+      int first = str.indexOf(str.charAt(i));       
+      int last = str.lastIndexOf(str.charAt(i));  
+      
+      if(first != last)                                      
+      {
+        count = Math.max(count, uniqueChar(str, first, last));    
+      }
+    }
+    System.out.println(count);
+}
+public static int uniqueChar(String str, int first, int last)
+{
+     HashMap<Character,Integer> map = new HashMap<>();
+      for(int i = first+1; i < last; i++ )
+      {
+          map.put(str.charAt(i), map.getOrDefault(str.charAt(i), 0)+1);
+      }
+      int res = 0;
+      for(char c : map.keySet())
+      {
+          if(map.get(c) == 1)
+            res+=1;
+      }
+      return res;
+}
