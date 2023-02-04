@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <title>Document</title>
+    <style>
+        h1{
+            text-align: center;
+            color: darkcyan;
+        }
+        img{
+            padding: 10px;
+            height: 100px;
+            width: 100px;
+            display: flex;
+            justify-content: center;
+        }
+        figure{
+            width: 100%;
+            height: 80vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        p{  
+           text-align: center;
+        }
+        .class{
+            display: flex;
+            justify-content:center;
+        }
+       .onofbottom{
+            margin: -150px; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+       }
+       main{
+            display: flex;
+            justify-content: center;
+       }
+       .switch{
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 40px;
+       }
+       .slider{
+        position: absolute;
+        cursor: pointer;
+        
+        
+       }
+       input:checked + .slider{
+        background-color: greenyellow;
+       }
+       input:checked + .slider:before{
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+       }
+     
+    </style>
+    <!-- <link rel="stylesheet" href="light.css"> -->
+</head>
+<body>
+    <h1 id="bulbdata">Light ON OFF</h1>
+    <main id="div">
+       <figure class="Lighton">
+        <img src="image/bulbOFF.jpg" id="Lightid1"  onclick="tubelighton()">
+        <figcaption>
+            <p>Light ON OFF</p>
+        </figcaption>
+       </figure>
+       <figure class="Lighton">
+        <img src="image/bulbOFF.jpg" id="Lightid2" onclick="tubelighton()">
+        <figcaption>
+            <p>Light ON OFF</p>
+        </figcaption>
+       </figure>
+       <figure class="Lighton">
+        <img src="image/bulbOFF.jpg" id="Lightid3" onclick="tubelighton()">
+        <figcaption>
+            <p>Light ON OFF</p>
+        </figcaption>
+       </figure>
+       <figure class="Lighton">
+        <img src="image/bulbOFF.jpg" id="Lightid4" onclick="tubelighton()">
+        <figcaption>
+            <p>Light ON OFF</p>
+        </figcaption>
+       </figure>
+       <figure class="Lighton">
+        <img src="image/bulbOFF.jpg" id="Lightid5" onclick="tubelighton()">
+        <figcaption>
+            <p>Light ON OFF</p>
+        </figcaption>
+       </figure>
+    </main>
+
+    <div class="onofbottom">
+        <label class="switch">
+            <input type="checkbox"><span class="slider"></span>
+        </label>
+    </div>
+    <script>
+        const tubelighton=()=>{
+            let bulbtext=document.getElementById('bulbdata')
+            for(x=1;x<6;x++){
+            let bid=document.getElementById('Lightid' .concat(x));
+            if(bid.src.match('bulbONN'))
+            {
+                bid.src="image/bulbOFF.jpg"
+                bulbtext.innerHTML= "Light is OFF"
+                bulbtext.style.color= "red"
+            }else{
+                bid.src="image/bulbONN.jpg"
+                bulbtext.innerHTML= "Light is ON"
+                bulbtext.style.color= "green"
+            }
+        }
+    }
+    </script>
+</body>
+</html>
